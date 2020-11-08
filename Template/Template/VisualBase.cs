@@ -13,7 +13,6 @@ namespace Template
     class VisualBase
     {
         protected Texture2D tex;
-        protected Vector2 pos;
 
         public virtual void Update()
         {
@@ -22,7 +21,7 @@ namespace Template
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, new Rectangle((int)pos.X, (int)pos.Y, 10, 10), Color.White);
+
         }
     }
 }

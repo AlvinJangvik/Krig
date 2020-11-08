@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,6 +13,9 @@ namespace Template
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         soldiers soldier;
+        Effects effects;
+        Controll controll = new Controll();
+        Menu menu;
         //KOmentar
         public Game1()
         {
@@ -27,7 +31,10 @@ namespace Template
         /// </summary>
         protected override void Initialize()
         {
+            soldiers.RedSoldierAmount = 500;
+            soldiers.Fight(500, 15, 100);
             // TODO: Add your initialization logic here
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -40,7 +47,9 @@ namespace Template
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            soldier = new soldiers(Content.Load<Texture2D>("svart"));
+            soldier = new soldiers(Content.Load<Texture2D>("GreenSlime"), Content.Load<Texture2D>("MagicMan"), Content.Load<SoundEffect>("Explosion"));
+            effects = new Effects(Content.Load<Texture2D>("svart"));
+            menu = new Menu(Content.Load<Texture2D>("svart"), Content.Load<SpriteFont>("basic"), Content.Load<SoundEffect>("Select"));
             // TODO: use this.Content to load your game content here 
         }
 
@@ -64,7 +73,10 @@ namespace Template
                 Exit();
 
             // TODO: Add your update logic here
+            menu.Update();
+            controll.Update();
             soldier.Update();
+            effects.Update();
 
             base.Update(gameTime);
         }
@@ -75,10 +87,19 @@ namespace Template
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightGreen);
+            GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin();
 
+            if (!Controll.Blood)
+            {
+                effects.Draw(spriteBatch);
+            }
             soldier.Draw(spriteBatch);
+            if (Controll.Blood)
+            {
+                effects.Draw(spriteBatch);
+            }
+            menu.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

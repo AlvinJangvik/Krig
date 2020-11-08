@@ -41,6 +41,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controll.cs" />
+    <Compile Include="Effects.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="VisualBase.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
